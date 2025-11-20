@@ -1,11 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./home.module.css";
 import { BsSearch } from "react-icons/bs";
+import { useState, type FormEvent } from "react";
 function Home() {
+  const [input, setInput] = useState("");
+
+  const navigate = useNavigate();
+
+  function handleSubmit(ev: FormEvent) {
+    ev.preventDefault();
+    if (input === "") return;
+    navigate(`/detail/${input}`);
+  }
+  function handleGetMore() {
+    alert("teste");
+  }
+
   return (
     <main className={styles.container}>
-      <form className={styles.form}>
-        <input type="text" placeholder="Digite o nome da moeda"></input>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Digite o nome da moeda"
+          onChange={(ev) => setInput(ev.target.value)}
+        ></input>
         <button type="submit">
           <BsSearch size={30} color="#fff" />
         </button>
@@ -38,12 +56,16 @@ function Home() {
             <td className={styles.tdLabel} data-label="Volume">
               2B
             </td>
-            <td className={styles.tdLabel} data-label="Mudança 24h">
+            <td className={styles.tdProfit} data-label="Mudança 24h">
               1.20
             </td>
           </tr>
         </tbody>
       </table>
+
+      <button className={styles.buttonMore} onClick={handleGetMore}>
+        Carregar mais...
+      </button>
     </main>
   );
 }
