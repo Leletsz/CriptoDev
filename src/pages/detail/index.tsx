@@ -68,9 +68,6 @@ function Detail() {
   }
   return (
     <div className={styles.container}>
-      <h1 className={styles.center}>{coin?.name}</h1>
-      <h1 className={styles.center}>{coin?.symbol}</h1>
-
       <section className={styles.content}>
         <img
           className={styles.logo}
@@ -82,6 +79,23 @@ function Detail() {
         <p>
           <strong>Preço:</strong> {coin?.formatedPrice}
         </p>
+
+        <a>
+          <strong>Mercado:</strong> {coin?.formatedMarket}
+        </a>
+        <a>
+          <strong>Volume:</strong> {coin?.formatedVolume}
+        </a>
+        <a>
+          <strong>Mudança 24h:</strong>
+          <span
+            className={
+              Number(coin?.changePercent24Hr) > 0 ? styles.profit : styles.loss
+            }
+          >
+            {Number(coin?.changePercent24Hr).toFixed(3)}
+          </span>
+        </a>
       </section>
     </div>
   );
