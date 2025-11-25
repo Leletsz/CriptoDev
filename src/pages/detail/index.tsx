@@ -17,6 +17,7 @@ function Detail() {
   const navigate = useNavigate();
 
   const [coin, setCoin] = useState<CoinProps>();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function getCoin() {
       try {
@@ -49,6 +50,7 @@ function Detail() {
               ),
             };
             setCoin(resultData);
+            setLoading(false);
           });
       } catch (err) {
         alert("Erro!");
@@ -57,8 +59,32 @@ function Detail() {
     }
     getCoin();
   }, [cripto]);
+  if (loading || !coin) {
+    return (
+      <div className={styles.container}>
+        <h2 className={styles.center}>Carregando detalhes...</h2>
+      </div>
+    );
+  }
+  return (
+    <div className={styles.container}>
+      <h1 className={styles.center}>{coin?.name}</h1>
+      <h1 className={styles.center}>{coin?.symbol}</h1>
 
-  return <div>Detalhe da moeda {cripto}</div>;
+      <section className={styles.content}>
+        <img
+          className={styles.logo}
+          src={`https://assets.coincap.io/assets/icons/${coin?.symbol.toLowerCase()}@2x.png`}
+        ></img>
+        <h1>
+          {coin?.name} | {coin?.symbol}
+        </h1>
+        <p>
+          <strong>Preço:</strong> {coin?.formatedPrice}
+        </p>
+      </section>
+    </div>
+  );
 }
 
 export default Detail;
